@@ -28,8 +28,8 @@ Tabs.Extra:AddButton({
                         ["gravity"] = Vector3.new(0, 0, 0),  
                         ["velocity"] = 999999999, 
                         ["Distance"] = 999999,  
-                        ["ExplosionDamage"] = 120,
-                        ["ExpRadius"] = 12,
+                        ["ExplosionDamage"] = 420,
+                        ["ExpRadius"] = 52,
                     },
                     ReplicatedStorage.RocketSystem.Rockets["RPG Rocket"],
                     weapon, weapon, player
