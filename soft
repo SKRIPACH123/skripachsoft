@@ -25,7 +25,7 @@ local UserInputService = game:GetService("UserInputService")
                         ["velocity"] = 999999999, 
                         ["Distance"] = 999999,  
                         ["ExplosionDamage"] = 228,
-                        ["ExpRadius"] = 52,
+                        ["ExpRadius"] = 1488,
                     },
                     ReplicatedStorage.RocketSystem.Rockets["RPG Rocket"],
                     weapon, weapon, player
