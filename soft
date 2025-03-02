@@ -1,8 +1,4 @@
-Tabs.Extra:AddButton({
-    Title = "RPG Nocooldown",
-    Description = "To Start Fire Hold G",
-    Callback = function()
-        local UserInputService = game:GetService("UserInputService")
+local UserInputService = game:GetService("UserInputService")
         local Players = game:GetService("Players")
         local ReplicatedStorage = game:GetService("ReplicatedStorage")
         local camera = workspace.CurrentCamera
@@ -28,8 +24,8 @@ Tabs.Extra:AddButton({
                         ["gravity"] = Vector3.new(0, 0, 0),  
                         ["velocity"] = 999999999, 
                         ["Distance"] = 999999,  
-                        ["ExplosionDamage"] = 420,
-                        ["ExpRadius"] = 52,
+                        ["ExplosionDamage"] = 120,
+                        ["ExpRadius"] = 12,
                     },
                     ReplicatedStorage.RocketSystem.Rockets["RPG Rocket"],
                     weapon, weapon, player
@@ -62,5 +58,3 @@ Tabs.Extra:AddButton({
                 stopFiring()
             end
         end)
-    end
-})
