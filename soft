@@ -60,6 +60,8 @@ local UserInputService = game:GetService("UserInputService")
         end)
 
 local textLabel = Instance.new("TextLabel")
+textLabel.Parent = game.StarterGui:WaitForChild("ScreenGui")
+
 
 textLabel.Text = "СКРИПАЧ" -- Текст, который будет отображаться
 textLabel.Size = UDim2.new(0.5, 0, 0.1, 0) -- Размер TextLabel (половина экрана по ширине, 10% по высоте)
