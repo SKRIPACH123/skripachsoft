@@ -73,6 +73,23 @@ v.Character.Head.Material = "Neon"
 v.Character.Head.CanCollide = false
 v.Character.Head.Massless = true
 end)
+
+
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "SkipachSoft"
+
+local frame = Instance.new("Frame")
+frame.Name = "SoftUse"
+frame.Size = UDim2.new(0.5, 0, 0.5, 0)
+frame.Position = UDim2.new(0.25, 0, 0.25, 0)
+frame.BackgroundColor3 = Color3.new(0, 1, 0.14902)
+frame.Parent = screenGui
+screenGui.Parent = playerGui
+wait(5)
+frame.Visible = false
 end
 end
 end
