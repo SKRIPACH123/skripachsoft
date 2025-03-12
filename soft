@@ -78,19 +78,36 @@ end)
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
+local dragging = false
+local dragStart = nil
+local startPos = nil
+
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "SkipachSoft"
 
 local frame = Instance.new("Frame")
 frame.Name = "SoftUse"
-frame.Size = UDim2.new(0.5, 0, 0.5, 0)
-frame.Position = UDim2.new(0.25, 0, 0.25, 0)
+frame.Size = UDim2.new(0, 100,0, 100)
+frame.Position = UDim2.new(0, 0,0.907, 0)
 frame.BackgroundColor3 = Color3.new(0, 1, 0.14902)
 frame.Parent = screenGui
 screenGui.Parent = playerGui
-wait(5)
-frame.Visible = false
-end
-end
-end
+frame.Visible = true
+
+frame.MouseButton1Down:Connect(function(mouse)
+	dragging = true
+	dragStart = mouse.Position
+	startPos = frame.Position
 end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+		local delta = input.Position - dragStart
+		frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+end)
+
+frame.MouseButton1Up:Connect(function()
+	dragging = false
+end)
+
