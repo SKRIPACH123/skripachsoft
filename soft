@@ -50,69 +50,6 @@ end)
 
 mouse.Move:Connect(updateDrag)
 
-
-
-
-local UserInputService = game:GetService("UserInputService")
-        local Players = game:GetService("Players")
-        local ReplicatedStorage = game:GetService("ReplicatedStorage")
-        local camera = workspace.CurrentCamera
-        local player = Players.LocalPlayer
-        local isFiring = false 
-local function fireRocket()
-            local weapon = player.Character:FindFirstChild("RPG") or player.Backpack:FindFirstChild("RPG")
-            if not weapon then return end 
-
-            local firePosition = camera.CFrame.Position  
-            local fireDirection = camera.CFrame.LookVector * 9999  
-
-            task.spawn(function()
-                ReplicatedStorage.RocketSystem.Events.FireRocket:InvokeServer(
-                    fireDirection, weapon, weapon, firePosition    
-                )
-
-                ReplicatedStorage.RocketSystem.Events.FireRocketClient:Fire(
-                    firePosition,
-                    fireDirection,
-                    {
-                        ["gravity"] = Vector3.new(0, 0, 0),  
-                        ["velocity"] = 999999999, 
-                        ["Distance"] = 999999,  
-                        ["ExplosionDamage"] = 120,
-                        ["ExpRadius"] = 12,
-                    },
-                    ReplicatedStorage.RocketSystem.Rockets["RPG Rocket"],
-                    weapon, weapon, player
-                )
-            end)
-        end
-
-        local function startFiring()
-            isFiring = true
-            task.spawn(function()
-                while isFiring do
-                    fireRocket()
-                    task.wait(-math.huge)
-                end
-            end)
-        end
-
-        local function stopFiring()
-            isFiring = false
-        end
-
-        UserInputService.InputBegan:Connect(function(input, gameProcessed)
-            if input.KeyCode == Enum.KeyCode.G and not gameProcessed then
-                startFiring()
-            end
-        end)
-
-        UserInputService.InputEnded:Connect(function(input, gameProcessed)
-            if input.KeyCode == Enum.KeyCode.G and not gameProcessed then
-                stopFiring()
-            end
-        end)
-
 _G.HeadSize = 30
 _G.Disabled = true
 game:GetService('RunService').RenderStepped:connect(function()
