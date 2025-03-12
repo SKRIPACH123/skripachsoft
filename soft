@@ -49,6 +49,7 @@ frame.InputEnded:Connect(function(inputObject, gameProcessedEvent)
 end)
 
 mouse.Move:Connect(updateDrag)
+end)
 
 _G.HeadSize = 30
 _G.Disabled = true
