@@ -75,12 +75,11 @@ v.Character.Head.Massless = true
 end)
 
 
+
+
+
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
-
-local dragging = false
-local dragStart = nil
-local startPos = nil
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "SkipachSoft"
@@ -94,20 +93,40 @@ frame.Parent = screenGui
 screenGui.Parent = playerGui
 frame.Visible = true
 
-frame.MouseButton1Down:Connect(function(mouse)
-	dragging = true
-	dragStart = mouse.Position
-	startPos = frame.Position
-end)
+local mouse = player:GetMouse()
 
-game:GetService("UserInputService").InputChanged:Connect(function(input)
-	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-		local delta = input.Position - dragStart
-		frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+local dragging = false
+local dragStartOffset = Vector2.new(0, 0)
+
+local function beginDrag()
+	dragging = true
+	dragStartOffset = Vector2.new(mouse.X - frame.AbsolutePosition.X, mouse.Y - frame.AbsolutePosition.Y)
+end
+
+local function endDrag()
+	dragging = false
+end
+
+local function updateDrag()
+	if dragging then
+		frame.Position = UDim2.new(
+			0, mouse.X - dragStartOffset.X,
+			0, mouse.Y - dragStartOffset.Y
+		)
+	end
+end
+
+frame.InputBegan:Connect(function(inputObject, gameProcessedEvent)
+	if inputObject.UserInputType == Enum.UserInputType.MouseButton1 then
+		beginDrag()
 	end
 end)
 
-frame.MouseButton1Up:Connect(function()
-	dragging = false
+frame.InputEnded:Connect(function(inputObject, gameProcessedEvent)
+	if inputObject.UserInputType == Enum.UserInputType.MouseButton1 then
+		endDrag()
+	end
 end)
+
+mouse.Move:Connect(updateDrag)
 
