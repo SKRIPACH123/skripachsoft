@@ -74,3 +74,60 @@ v.Character.Head.CanCollide = false
 v.Character.Head.Massless = true
 end)
 
+
+
+
+
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "SkipachSoft"
+
+local frame = Instance.new("Frame")
+frame.Name = "SoftUse"
+frame.Size = UDim2.new(0, 100,0, 100)
+frame.Position = UDim2.new(0, 0,0.907, 0)
+frame.BackgroundColor3 = Color3.new(0, 1, 0.14902)
+frame.Parent = screenGui
+screenGui.Parent = playerGui
+frame.Visible = true
+
+local mouse = player:GetMouse()
+
+local dragging = false
+local dragStartOffset = Vector2.new(0, 0)
+
+local function beginDrag()
+	dragging = true
+	dragStartOffset = Vector2.new(mouse.X - frame.AbsolutePosition.X, mouse.Y - frame.AbsolutePosition.Y)
+end
+
+local function endDrag()
+	dragging = false
+end
+
+local function updateDrag()
+	if dragging then
+		frame.Position = UDim2.new(
+			0, mouse.X - dragStartOffset.X,
+			0, mouse.Y - dragStartOffset.Y
+		)
+	end
+end
+
+frame.InputBegan:Connect(function(inputObject, gameProcessedEvent)
+	if inputObject.UserInputType == Enum.UserInputType.MouseButton1 then
+		beginDrag()
+	end
+end)
+
+frame.InputEnded:Connect(function(inputObject, gameProcessedEvent)
+	if inputObject.UserInputType == Enum.UserInputType.MouseButton1 then
+		endDrag()
+	end
+end)
+
+mouse.Move:Connect(updateDrag)
+
+
